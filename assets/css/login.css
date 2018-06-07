@@ -1,0 +1,32 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    height: 100vh;
+}
+.container {
+    width: 400px;
+    height: 350px;
+    border-radius: 10px;
+    background-color: #DDD;
+    padding: 20px;
+}
+.container input[type=text], .container input[type=password] {
+    width: 100%;
+    height: 30px;
+    font-size: 25px;
+}
+.container input[type=submit] {
+    padding: 10px;
+    font-size: 15px;
+}
+.warning {
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #FF3333;
+    background-color: #FF9999;
+
+}
