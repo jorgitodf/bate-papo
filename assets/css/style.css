@@ -10,6 +10,7 @@ body {
 nav {
     height: 50px;
     background-color: #CCC;
+    display: flex;
 }
 section {
     flex: 1;
@@ -26,6 +27,7 @@ nav ul, nav li {
 }
 nav ul {
     display: flex;
+    flex: 1;
 }
 nav li {
     flex: 1;
@@ -42,8 +44,9 @@ nav li.active {
     font-weight: bold;
 }
 .add_tab {
-    flex: none;
     width: 50px;
     background-color: #999;
     font-size: 25px;
+    border: 0;
+    cursor: pointer;
 }
