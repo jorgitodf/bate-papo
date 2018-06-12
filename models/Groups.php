@@ -10,4 +10,13 @@ class Groups extends Model {
         $array = $sql->fetchAll(PDO::FETCH_ASSOC);
         return $array;
     }
+
+    public function add($name)
+    {       
+        $array = array();
+        $sql = "INSERT INTO groups (name) VALUES (:name)";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":name", $name);
+        $sql->execute();
+    }
 }

@@ -1,9 +1,9 @@
-function abrirChat() {
+/* function abrirChat() {
     var cid = $('#chat_id').val();
     var cnm = $('#chat_nome').val();
     chat.setGroup(cid, cnm);
     $('.modal_bg').hide();
-}
+} */
 
 function fecharModal() {
     $('.modal_bg').hide();
@@ -22,6 +22,19 @@ $(function() {
 
         $('.modal_area').html(html);
         $('.modal_bg').show();
-        chat.loadGroupList('groupList');
+
+        chat.loadGroupList(function(json) {
+            var html = '';
+            for(var i in json.groups) {
+                html += '<button data-id="' + json.groups[i].id + '">' + json.groups[i].name + '</button>';    
+            }
+            $('#groupList').html(html);
+            $('#groupList').find('button').on('click', function() {
+                var cid = $(this).attr('data-id');
+                var cnm = $(this).text();
+                chat.setGroup(cid, cnm);
+                $('.modal_bg').hide();
+            });
+        });
     });
 });

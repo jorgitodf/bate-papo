@@ -29,4 +29,18 @@ class ajaxController extends Controller
         exit;
     }
 
+    public function addGroup()
+    {
+        $array = array('status'=>'1', 'error'=> '0');
+        if (!empty($_POST['name'])) {
+            $name = $_POST['name'];
+            $this->groups->add($name);
+        } else {
+            $array['error'] = '1';
+            $array['errorMsg'] = 'Falta o Nome do Grupo!';
+        }
+        echo json_encode($array);
+        exit;
+    }
+
 }

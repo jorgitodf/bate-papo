@@ -1,7 +1,6 @@
 var chat = {
 
     groups: [],
-    groupsList: [],
 
     setGroup:function(id, name) {
         var found = false;
@@ -33,19 +32,14 @@ var chat = {
         $('nav ul').html(html);
     },
 
-    loadGroupList:function(id) {
+    loadGroupList:function(ajaxCallback) {
         $.ajax({
             url:BASE_URL + 'ajax/getGroups',
             type:'GET',
             dataType:'json',
             success:function(json) {
                 if (json.status == '1') {
-                    this.groupsList = json.groups;
-                    var html = '';
-                    for(var i in this.groupsList) {
-                        html += '<button data-id="' + this.groupsList[i].id + '">' + this.groupsList[i].name + '</button>';    
-                    }
-                    $('#'+id).html(html);
+                    ajaxCallback(json);
                 } else {
                     window.location.href = BASE_URL+'login';
                 }
