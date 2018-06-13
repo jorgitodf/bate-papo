@@ -1,6 +1,7 @@
 var chat = {
 
     groups: [],
+    activeGroup: 0,
 
     setGroup:function(id, name) {
         var found = false;
@@ -27,8 +28,9 @@ var chat = {
         var html = "";
 
         for(var i in this.groups) {
-            html += '<li>' + this.groups[i].name + '</li>';
+            html += '<li data-id="'+ this.groups[i].id+'">' + this.groups[i].name + '</li>';
         }
+
         $('nav ul').html(html);
     },
 
@@ -45,6 +47,37 @@ var chat = {
                 }
             }
         });
+    },
+
+    addNewGroup:function(groupName, ajaxCallback) {
+        $.ajax({
+            url:BASE_URL + 'ajax/addGroup',
+            type:'POST',
+            data:{name:groupName},
+            dataType:'json',
+            success:function(json) {
+                if (json.status == '1') {
+                    ajaxCallback(json);
+                } else {
+                    window.location.href = BASE_URL+'login';
+                }
+            }
+        });
+    },
+
+    setActiveGroup:function(id) {
+        this.activeGroup = id;
+        this.loadConversation();
+    },
+
+    getActiveGroup:function() {
+        return this.activeGroup;
+    },
+
+    loadConversation:function() {
+        $('nav ul').find('.active_group').removeClass('active_group');
+        $('nav ul').find('li[data-id='+this.activeGroup+']').addClass('active_group');
+
     }
 
 };

@@ -79,4 +79,8 @@ nav li.active {
 #groupList button:hover {
     background-color: #CCC;
     cursor: pointer;
-}    
+}   
+
+.active_group {
+    background-color: #EEE !important;
+}
