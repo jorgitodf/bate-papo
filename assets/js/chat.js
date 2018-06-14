@@ -10,12 +10,14 @@ var chat = {
                 found = true;        
             }
         }
-
         if (found == false) {
             this.groups.push({
                 id:id,
                 name:name
             });
+        }
+        if (this.groups.length == 1) {
+            this.setActiveGroup(id);
         }
         this.updateGroups();
     },
@@ -32,6 +34,7 @@ var chat = {
         }
 
         $('nav ul').html(html);
+        this.loadConversation();
     },
 
     loadGroupList:function(ajaxCallback) {
@@ -75,9 +78,10 @@ var chat = {
     },
 
     loadConversation:function() {
-        $('nav ul').find('.active_group').removeClass('active_group');
-        $('nav ul').find('li[data-id='+this.activeGroup+']').addClass('active_group');
-
+        if (this.activeGroup != 0) {
+            $('nav ul').find('.active_group').removeClass('active_group');
+            $('nav ul').find('li[data-id='+this.activeGroup+']').addClass('active_group');
+        }
     }
 
 };
