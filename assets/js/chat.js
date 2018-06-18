@@ -13,7 +13,10 @@ var chat = {
         if (found == false) {
             this.groups.push({
                 id:id,
-                name:name
+                name:name,
+                messages:[{
+                    id:1, sender_id:1, sender_name:'Jorgito', sender_date:'10:00', msg:'Oi, tudo bem?'
+                }]
             });
         }
         if (this.groups.length == 1) {
@@ -81,6 +84,33 @@ var chat = {
         if (this.activeGroup != 0) {
             $('nav ul').find('.active_group').removeClass('active_group');
             $('nav ul').find('li[data-id='+this.activeGroup+']').addClass('active_group');
+        }
+
+        this.showMessages();
+    },
+
+    showMessages:function() {
+        $('.messagens').html('');
+        if (this.activeGroup != 0) {
+            var msgs = [];
+            for (var i in this.groups) {
+                if (this.groups[i].id == this.activeGroup) {
+                    msgs = this.groups[i].messages;
+                }
+            }
+            for (var i in msgs) {
+                var html = '<div class="message">';
+                html += '<div class="m_info">';
+                html += '    <span class="m_sender">'+msgs[i].sender_name+'</span>';
+                html += '    <span class="m_date">'+msgs[i].sender_date+'</span>';
+                html += '</div>';
+                html += '<div class="m_body">';
+                html += msgs[i].msg;
+                html += '</div>';
+                html += '</div>';
+
+                $('.messagens').append(html);
+            }
         }
     }
 
