@@ -7,15 +7,7 @@
     </nav>
     <section>
         <div class="messages">
-            <div class="message">
-                <div class="m_info">
-                    <span class="m_sender">Jorgito Paiva</span>
-                    <span class="m_date">10:00</span>
-                </div>
-                <div class="m_body">
-                    Alguma Mensagem de Exemplo
-                </div>
-            </div>
+
         </div>
     </section>
     <footer>

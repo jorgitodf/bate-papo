@@ -112,6 +112,26 @@ var chat = {
                 $('.messagens').append(html);
             }
         }
+    },
+
+    sendMessage:function(msg) {
+        if (msg.length > 0 && this.activeGroup != 0) {
+            $.ajax({
+                url:BASE_URL + 'ajax/addMessage',
+                type:'POST',
+                data:{id_group:this.activeGroup, msg:msg},
+                dataType:'json',
+                success:function(json) {
+                    if (json.status == '1') {
+                        if (json.error == '1') {
+                            alert(json.errorMsg);
+                        }
+                    } else {
+                        window.location.href = BASE_URL+'login';
+                    }
+                }
+            });
+        }
     }
 
 };
