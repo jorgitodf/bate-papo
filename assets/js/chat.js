@@ -2,6 +2,7 @@ var chat = {
 
     groups: [],
     activeGroup: 0,
+    lastTime: '',
 
     setGroup:function(id, name) {
         var found = false;
@@ -131,6 +132,65 @@ var chat = {
                     }
                 }
             });
+        }
+    },
+
+    updateLastTime:function(last_time) {
+        this.lastTime = last_time;
+    },
+
+    insertMessage:function(item) {
+        for(var i in this.groups) {
+            if (this.groups[i].id == item.id_group) {
+
+                var date_msg = item.date_msg.split('');
+                date_msg = date_msg[1];
+
+                this.groups[i].messages.push({
+                    id:             item.id,
+                    sender_id:      item.id_user,
+                    sender_name:    item.username,
+                    sender_date:    date_msg,
+                    msg:            item.msg
+                });
+            }
+        }
+    },
+
+    chatActivity:function() {
+        var gs = this.getGroups();
+        var groups = [];
+
+        for(var i in gs) {
+            groups.push(gs[i].id);
+        }
+
+        if (groups.length > 0) {
+            $.ajax({
+                url:BASE_URL + 'ajax/getMessages',
+                type:'GET',
+                data:{last_time:this.lastTime, groups:groups},
+                dataType:'json',
+                success:function(json) {
+                    if (json.status == '1') {
+                        chat.updateLastTime(json.last_time);
+                        for(var i in json.msgs) {
+                            chat.insertMessage(json.msgs[i]);
+                        }
+                        chat.loadConversation();
+                    } else {
+                        window.location.href = BASE_URL+'login';
+                    }
+                },
+                complete:function() {
+                    chat.chatActivity();
+                }    
+            });
+        } else {
+            setTimeout(function() {
+                chat.chatActivity();
+            }, 1000);
+            
         }
     }
 

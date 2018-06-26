@@ -16,7 +16,9 @@ class Messages extends Model
     public function get($lastTime, $groups)
     {
         $array = array();
-        $sql = "SELECT * FROM messages WHERE date_msg > :date_msg AND id_group IN (".(implode(',', $groups)).")";
+        $sql = "SELECT *, (SELECT users.username FROM users WHERE users.id = messages.user_id) AS username
+            FROM messages 
+            WHERE date_msg > :date_msg AND group_id IN (".(implode(',', $groups)).")";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(":date_msg", $lastTime);
         $sql->execute();

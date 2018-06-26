@@ -64,7 +64,7 @@ class ajaxController extends Controller
 
     public function getMessages()
     {
-        $array = array('status'=>'1', 'msgs'=>array());
+        $array = array('status'=>'1', 'msgs'=>array(), 'last_time'=>date('Y-m-d H:i:s'));
         set_time_limit(60);
 
         $ultMsg = date('Y-m-d H:i:s');
@@ -80,9 +80,11 @@ class ajaxController extends Controller
         }
 
         while (true) {
+            session_write_close();
             $msgs = $this->messages->get($ultMsg, $groups);
             if (count($msgs) > 0) {
                 $array['msgs'] = $msgs;
+                $array['last_time'] = date('Y-m-d H:i:s');
                 break;
             } else {
                 sleep(2);
